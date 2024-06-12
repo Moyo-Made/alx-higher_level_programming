@@ -1,4 +1,5 @@
 #!/bin/bash
 python3 - <<EOF
 $PYCODE
+print()
 EOF
