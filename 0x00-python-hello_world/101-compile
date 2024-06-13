@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ -z "$PYFILE" ]; then
+	echo "PYFILE environment is not set"
+	exit 1
+fi
+
+echo "Compiling $PYFILE ..."
+
+python3 -m py_compile "$PYFILE"
+
+BASENAME=$(basename "$PYFILE")
+BASEPY="${BASENAME%.py}"
+
+COMPILED_FILE=$(find __pycache__ -name "${BASEPY}".*.pyc)
+
+if [ -f "$COMPILED_FILE" ]; then
+	mv "$COMPILED_FILE" "./${BASENAME}c"
+else
+	echo "Failed to compile $PYFILE"
+	exit 1
+fi
+echo "Compiled file: ${BASENAME}c"
